@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#06080d" />
+    <title>身姿律 · BODY × MUSIC × MOTION</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <main class="experience-shell" id="experience">
+      <section class="stage" aria-label="身姿律互动舞台">
+        <video id="camera" class="camera" autoplay muted playsinline></video>
+        <canvas id="visual-canvas" class="visual-canvas"></canvas>
+        <div class="stage-vignette" aria-hidden="true"></div>
+      </section>
+
+      <header class="top-layer">
+        <div class="brand">
+          <h1>身姿律</h1>
+          <p>BODY <span>×</span> MUSIC <span>×</span> MOTION</p>
+        </div>
+        <nav class="view-switch" aria-label="作品视图">
+          <button class="view-button active" type="button" data-view="stage" aria-pressed="true">作品</button>
+          <button class="view-button" type="button" data-view="explain" aria-pressed="false">解析</button>
+        </nav>
+        <div class="system-status" aria-live="polite">
+          <i></i>
+          <span id="status-label">SYSTEM READY</span>
+        </div>
+        <p class="hand-status" id="hand-status" aria-live="polite">HAND DETAIL STANDBY</p>
+      </header>
+
+      <button class="stage-stop" id="stage-stop" type="button" aria-label="停止体验" aria-hidden="true" disabled>停止体验</button>
+
+      <section class="explain-layer" id="explain-layer" aria-label="作品解析模式" aria-hidden="true">
+        <div class="explain-meta">
+          <p><span>当前模式</span><b id="explain-mode-name">五声古韵</b></p>
+          <p><span>数据来源</span><b id="explain-provenance">待真实输入</b></p>
+          <button class="explain-stop" id="explain-stop" type="button">开始</button>
+        </div>
+
+        <div class="explain-scroll">
+          <div class="explain-grid">
+            <aside class="explain-panel motion-panel" aria-labelledby="motion-panel-title">
+              <div class="panel-heading"><p>BODY INPUT</p><h2 id="motion-panel-title">运动特征</h2></div>
+              <dl class="signal-list">
+                <div><dt>主导手高度</dt><dd id="ex-motion-height">等待输入</dd></div>
+                <div><dt>运动速度</dt><dd id="ex-motion-speed">等待输入</dd></div>
+                <div><dt>运动能量</dt><dd id="ex-motion-energy">等待输入</dd></div>
+                <div><dt>方向</dt><dd id="ex-motion-direction">等待输入</dd></div>
+                <div><dt>持续运动</dt><dd id="ex-motion-duration">等待输入</dd></div>
+                <div><dt>跟踪</dt><dd id="ex-motion-tracking">等待输入</dd></div>
+              </dl>
+              <p class="recent-gesture" id="ex-recent-gesture">最近手势：等待输入</p>
+            </aside>
+
+            <div class="explain-stage-label" aria-hidden="true">
+              <span>CAMERA / BODY / VISUAL</span>
+            </div>
+
+            <aside class="explain-panel music-panel" aria-labelledby="music-panel-title">
+              <div class="panel-heading"><p>MUSIC STATE</p><h2 id="music-panel-title">音乐状态</h2></div>
+              <dl class="signal-list compact">
+                <div><dt>目标音高</dt><dd id="ex-music-pitch">等待输入</dd></div>
+                <div><dt>最近调度音符</dt><dd id="ex-music-note">尚未调度</dd></div>
+                <div><dt>BPM</dt><dd id="ex-music-bpm">等待输入</dd></div>
+                <div><dt>节奏密度</dt><dd id="ex-music-density">等待输入</dd></div>
+                <div><dt>和声丰富度</dt><dd id="ex-music-harmony">等待输入</dd></div>
+                <div><dt>Pan</dt><dd id="ex-music-pan">等待输入</dd></div>
+                <div><dt>延音控制</dt><dd id="ex-music-sustain">等待输入</dd></div>
+                <div><dt>乐句状态</dt><dd id="ex-music-phrase">等待输入</dd></div>
+              </dl>
+            </aside>
+          </div>
+
+          <section class="mapping-section" aria-labelledby="mapping-title">
+            <div class="mapping-heading"><p>CONTINUOUS MAPPING</p><h2 id="mapping-title">运动 → 音乐</h2></div>
+            <div class="mapping-bands">
+              <article class="mapping-band" data-map="pitch">
+                <div><span>手腕高度</span><b id="map-height">--</b></div><i></i>
+                <div><span>旋律目标</span><b id="map-pitch">--</b></div><i></i>
+                <div><span>音阶 / 音级惯性</span><b id="map-scale">五声音阶</b></div><i></i>
+                <div><span>调度音符</span><b id="map-note">--</b></div>
+              </article>
+              <article class="mapping-band" data-map="rhythm">
+                <div><span>运动速度</span><b id="map-speed">--</b></div><i></i>
+                <div><span>BPM / 节奏密度</span><b id="map-rhythm">--</b></div><i></i>
+                <div><span>独立音乐时钟</span><b>1/8 STEP</b></div><i></i>
+                <div><span>发音节奏</span><b id="map-phrase">--</b></div>
+              </article>
+              <article class="mapping-band" data-map="pan">
+                <div><span>肩中心 X</span><b id="map-body-x">--</b></div><i></i>
+                <div><span>Pan</span><b id="map-pan">--</b></div><i></i>
+                <div><span>声像</span><b id="map-image">--</b></div>
+              </article>
+              <article class="mapping-band" data-map="sustain">
+                <div><span>持续运动 / 静止程度</span><b id="map-persistence">--</b></div><i></i>
+                <div><span>Sustain</span><b id="map-sustain">--</b></div><i></i>
+                <div><span>音符延展</span><b>约束控制</b></div>
+              </article>
+            </div>
+            <p class="mapping-description" id="mapping-description">手腕高度改变旋律目标，实际音符经过当前音阶与音级惯性约束后生成；运动速度参与 BPM 与节奏密度控制，最终按照独立音乐时钟发声；身体横向位置参与音乐声像控制；持续运动与静止程度参与延音控制。</p>
+            <p class="current-mapping"><span>当前关系</span><b id="current-mapping">当前旋律输入来源暂未确定。</b></p>
+          </section>
+
+          <section class="mode-explanation">
+            <div><p>MODE CHARACTER</p><h2 id="mode-detail-name">五声古韵</h2></div>
+            <p id="mode-description">以 C 宫五声音阶组织身体驱动的旋律，采用正弦合成主音色。</p>
+            <b id="mode-scale">Scale: C D E G A</b>
+          </section>
+
+          <details class="explain-details">
+            <summary>查看详细参数</summary>
+            <div class="detail-groups">
+              <section><h3>MOTION</h3><div id="detail-motion"></div></section>
+              <section><h3>MUSIC</h3><div id="detail-music"></div></section>
+              <section><h3>SYSTEM</h3><div id="detail-system"></div></section>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="start-screen" id="start-screen" aria-label="开始体验">
+        <p class="start-eyebrow">INTERACTIVE AUDIOVISUAL STUDY</p>
+        <h2>身姿律</h2>
+        <p class="start-subtitle">BODY <span>×</span> MUSIC <span>×</span> MOTION</p>
+        <p class="start-copy">让身体成为乐器，让动作成为旋律。</p>
+        <button class="start-button" id="start-button" type="button">
+          <span class="button-ring"></span>
+          <span id="start-label">START</span>
+        </button>
+        <p class="start-feedback" id="start-feedback" aria-live="polite"></p>
+      </section>
+
+      <section class="bottom-layer" aria-label="控制与实时参数">
+        <div class="mode-control">
+          <p class="section-label">MODE</p>
+          <div class="mode-list" role="tablist" aria-label="音乐模式">
+            <button class="mode-button active" type="button" data-mode="gu-yun" role="tab" aria-selected="true">
+              <b>01</b><span>五声古韵</span>
+            </button>
+            <button class="mode-button" type="button" data-mode="electronic" role="tab" aria-selected="false">
+              <b>02</b><span>电子律动</span>
+            </button>
+            <button class="mode-button" type="button" data-mode="nature" role="tab" aria-selected="false">
+              <b>03</b><span>自然声境</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="metrics" aria-label="动作参数">
+          <div class="metric">
+            <p>MOTION</p>
+            <div class="metric-track"><i id="motion-meter"></i></div>
+            <strong id="motion-value">00%</strong>
+          </div>
+          <div class="metric">
+            <p>TEMPO</p>
+            <div class="metric-track"><i id="tempo-meter"></i></div>
+            <strong id="tempo-value">72 BPM</strong>
+          </div>
+          <div class="metric">
+            <p>ENERGY</p>
+            <div class="metric-track"><i id="energy-meter"></i></div>
+            <strong id="energy-value">00%</strong>
+          </div>
+        </div>
+      </section>
+
+      <div class="keyboard-hint" aria-hidden="true">KEYBOARD · 1 / 2 / 3 · SPACE · E · P · D</div>
+      <aside class="debug-overlay" id="debug-overlay" aria-live="polite">
+        <p>TRACKING <b id="debug-tracking">IDLE</b></p>
+        <p>QUALITY <b id="debug-quality">0.00</b></p>
+        <p class="debug-visible">VISIBLE <b id="debug-visible">--</b></p>
+        <p>WRIST SPEED <b id="debug-wrist">0.00</b></p>
+        <p>ARM SPREAD <b id="debug-spread">0.00</b></p>
+        <p>ENERGY <b id="debug-energy">0.00</b></p>
+        <p>BPM <b id="debug-bpm">60</b></p>
+        <p>MUSIC <b id="debug-music">IDLE</b></p>
+        <p>HAND ENGINE <b id="debug-hand-engine">LOADING</b></p>
+        <p>HANDS <b id="debug-hands">L- R-</b></p>
+        <p>GESTURE <b id="debug-gesture">--</b></p>
+      </aside>
+      <div class="notice" id="notice" role="alert" aria-live="assertive"></div>
+    </main>
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>
